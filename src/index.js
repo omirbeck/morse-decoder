@@ -38,7 +38,38 @@ const MORSE_TABLE = {
 };
 
 function decode(expr) {
-    // write your solution here
+    let regex = /[01]{10}|[*]{10}/gm;
+    let morze = expr.match(regex);
+    let dotdash = '';
+    let word = '';
+    
+    //console.log(morze);
+    function campare(morse, dd){
+      for(let key in morse){
+        //console.log(key)
+         if (key == dd) {
+           word = word + morse[key];
+         }
+      }
+    }
+    
+    morze.forEach(item => {
+      if (item == '**********') {
+        word = word + ' '
+      } else { 
+        let letter = item.match(/[01]{2}/gm);
+        letter.forEach(el => {
+          if (el == '10') { 
+            dotdash = dotdash + '.';
+          } else if(el == '11') dotdash = dotdash + '-';
+        });
+        //console.log(dotdash)
+        campare(MORSE_TABLE, dotdash)
+        dotdash = '';
+      }
+    });
+    
+    return word
 }
 
 module.exports = {
